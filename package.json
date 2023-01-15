@@ -18,14 +18,23 @@
     "start": "cross-env NODE_ENV=development webpack-dev-server --hot --host 0.0.0.0 --config=./webpack.dev.config.js --mode development",
     "build": "cross-env NODE_ENV=production webpack --config webpack.build.config.js --mode production",
     "package": "npm run build",
-    "postpackage": "electron-packager ./ --out=./release-builds"
+    "postpackage": "electron-packager ./ --out=./release-builds --overwrite"
   },
   "dependencies": {
+    "@aws-sdk/eventstream-marshaller": "^0.1.0-preview.2",
+    "@aws-sdk/util-utf8-node": "^0.1.0-preview.1",
+    "aws-sdk": "^2.1295.0",
+    "axios": "^1.2.2",
+    "microphone-stream": "^5.0.1",
     "react": "^16.13.1",
-    "react-dom": "^16.13.1"
+    "react-contenteditable": "^3.3.5",
+    "react-dom": "^16.13.1",
+    "semantic-ui-css": "^2.5.0",
+    "semantic-ui-react": "^2.1.4"
   },
   "devDependencies": {
     "@babel/core": "^7.9.6",
+    "@babel/plugin-proposal-class-properties": "^7.18.6",
     "@babel/preset-env": "^7.9.6",
     "@babel/preset-react": "^7.9.4",
     "babel-loader": "^8.1.0",
@@ -34,7 +43,7 @@
     "css-loader": "^3.5.3",
     "electron": "^15.5.5",
     "electron-devtools-installer": "^3.0.0",
-    "electron-packager": "^14.2.1",
+    "electron-packager": "^17.1.1",
     "file-loader": "^6.0.0",
     "html-webpack-plugin": "^4.3.0",
     "mini-css-extract-plugin": "^0.9.0",

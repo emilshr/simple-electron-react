@@ -1,6 +1,6 @@
 const path = require('path')
 const url = require('url')
-const { app, BrowserWindow } = require('electron')
+const { app, BrowserWindow, systemPreferences } = require('electron')
 
 let mainWindow
 
@@ -21,6 +21,8 @@ function createMainWindow() {
 		icon: `${__dirname}/assets/icon.png`,
 		webPreferences: {
 			nodeIntegration: true,
+			contextIsolation: false,
+      		enableRemoteModule: true,
 		},
 	})
 
@@ -46,6 +48,12 @@ function createMainWindow() {
 	// Don't show until we are ready and loaded
 	mainWindow.once('ready-to-show', () => {
 		mainWindow.show()
+
+		systemPreferences.askForMediaAccess('microphone').then(access => {
+			console.log('mic access', { access })
+		}).catch(err => {
+			console.error(err)
+		})
 
 		// Open devtools if dev
 		if (isDev) {
