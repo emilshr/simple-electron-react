@@ -23,14 +23,16 @@
   "dependencies": {
     "@aws-sdk/eventstream-marshaller": "^0.1.0-preview.2",
     "@aws-sdk/util-utf8-node": "^0.1.0-preview.1",
+    "@firebase/firestore": "^3.8.0",
     "aws-sdk": "^2.1295.0",
     "axios": "^1.2.2",
+    "firebase": "^9.15.0",
     "microphone-stream": "^5.0.1",
     "react": "^16.13.1",
     "react-contenteditable": "^3.3.5",
     "react-dom": "^16.13.1",
-    "semantic-ui-css": "^2.5.0",
-    "semantic-ui-react": "^2.1.4"
+    "semantic-ui-css": "2.4.1",
+    "semantic-ui-react": "1.1.1"
   },
   "devDependencies": {
     "@babel/core": "^7.9.6",

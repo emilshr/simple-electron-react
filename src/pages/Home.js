@@ -8,6 +8,7 @@ import { startAudio, stopAudio } from '../audio/miceAudioStream';
 import getCredentials from '../services/getTranscribeCredentials';
 import runComprehend from '../comprehend/comprehendUtil';
 import { TranscriptHTML, TranscriptLine } from '../comprehend/TranscriptLine';
+import { readText, writeText } from '../firebase/fb-service';
 
 function App() {
 
@@ -22,18 +23,32 @@ class HomeScreen extends Component {
 
   constructor(props){  
     super(props);  
-    this.state = { listening: false, transcriptPiece: "", clientCredentials: {}, transcriptionHtml: ""};
+    this.state = { listening: false, transcriptPiece: "", clientCredentials: {}, transcriptionHtml: "", documentId: new Date(), text: '' };
+    this.textLog = React.createRef()
   }
-
+  
   componentDidMount() {
+    this.startReading();
+  }
+  
+
+
+  startReading = () => {
+    
+      readText((content) => {
+        console.log('read ... ', content)
+        this.setState({ text: content })
+        console.log(this.textLog)
+        this.textLog.current.scrollTop = this.textLog.current.scrollHeight;
+      })
+    
   }
 
   startRecording = () => {
-    const result = getCredentials();
+    const result = getCredentials()
     
       startAudio(this.toggleStartStop, this.getTranscript, result);
-      this.setState({clientCredentials: result});
-    
+      this.setState({clientCredentials: result})
   }
 
   getTranscript = (transcript, isFinal) => {
@@ -45,6 +60,7 @@ class HomeScreen extends Component {
       })
     } else {
       this.setState({transcriptPiece: transcript + "\n"})
+      writeText(transcript)
     }
     this.scrollToBottom();
   }
@@ -64,14 +80,16 @@ class HomeScreen extends Component {
   }
 
   render() {
-    const {listening, transcriptPiece, textchunks, comprehendResults, line, transcriptionHtml} = this.state;
+    const {listening, textchunks} = this.state;
+
+    console.log({ textchunks })
 
     return (
       <div>
         <Container text style={{ marginTop: '2em' }}>
           <Form>
             <div className='homepage'>
-              <ContentEditable ref={this.editableref} className="editable" html={transcriptionHtml+transcriptPiece} name='transcription'/>
+              <textarea ref={this.textLog} value={this.state.text} disabled />
               {listening ? '' : <Icon name="microphone" className="mice" link onClick={this.startRecording}/> }
               {listening ? <Icon name="mute" className="mute" link onClick={this.endRecording}/> :''}
             </div>

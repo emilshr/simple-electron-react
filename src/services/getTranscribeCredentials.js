@@ -14,9 +14,9 @@ async function getTranscribeCredentials() {
 }
 
 export default function getCredentials() {
-  return {
-    'accessKeyId': 'AKIA5ZVGWSRJZ5UTHKFL',
-    'secretAccessKey': '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',
-    'region': 'us-east-1'
-  }
+    return {
+      'accessKeyId': 'AKIA5ZVGWSRJZ5UTHKFL',
+      'secretAccessKey': '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',
+      'region': 'us-east-1'
+    }
 }
